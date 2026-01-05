@@ -39,12 +39,12 @@ async function teardown() {
 
 async function getItems() {
     return new Promise((acc, rej) => {
-        db.all('SELECT * FROM todo_items', (err, rows) => {
+        db.all('SELECT * FROM todo_items', [], (err, rows) => {
             if (err) return rej(err);
             acc(
                 rows.map(item =>
                     Object.assign({}, item, {
-                        completed: item.complated === 1,
+                        completed: item.completed === 1,
                     }),
                 ),
             );
@@ -54,17 +54,17 @@ async function getItems() {
 
 async function getItem(id) {
     return new Promise((acc, rej) => {
-        db.get('SELECT * FROM todo_items WHERE id = ?', [id], (err, row) => {
+        db.all('SELECT * FROM todo_items WHERE id=?', [id], (err, rows) => {
             if (err) return rej(err);
-            if (!row) return acc(null);
             acc(
-                Object.assign({}, row, {
-                    completed: row.completed === 1,
-                }),
+                rows.map(item =>
+                    Object.assign({}, item, {
+                        completed: item.completed === 1,
+                    }),
+                )[0],
             );
         });
-    }
-    );
+    });
 }
 
 async function storeItem(item) {
