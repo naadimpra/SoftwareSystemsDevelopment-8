@@ -3,6 +3,12 @@ function App() {
     return (
         <Container>
             <Row>
+                <Col className="text-center py-5">
+                    <h1 className="display-4">ToDo App by Naadimpra</h1>
+                    <p className="lead">Damarhafni Rahmannabel Nadim Pramono</p>
+                </Col>
+            </Row>
+            <Row>
                 <Col md={{ offset: 3, span: 6 }}>
                     <TodoListCard />
                 </Col>
